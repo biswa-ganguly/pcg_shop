@@ -7,8 +7,6 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "/assets/logo.webp";
 
 const Navbar = () => {
-  const toggleLanguageMenu = () => setIsOpen(!isOpen);
-  const toggleMobileMenu = () => setMenuOpen(!menuOpen);
   const [isOpen, setIsOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdown, setDropdown] = useState({
@@ -33,129 +31,105 @@ const Navbar = () => {
 
   return (
     <nav className="bg-white text-[#19325b] shadow-lg sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        {/* Logo Section */}
-        <Link to="/">
-          <img src={logo} alt="PCG Logo" className="h-14 w-auto" />
-        </Link>
-
-        {/* Desktop Menu */}
-        <div className="hidden md:flex items-center space-x-6">
-          <Link to="/" className="hover:underline">Home</Link>
-          <Link to="/about" className="hover:underline">About Us</Link>
-          <div className="relative">
-            <button
-              className="flex items-center hover:underline"
-              onClick={() => toggleDropdown("products")}
-            >
-              <Link to="/products">
-                Products
-              </Link>
-              <FaAngleDown className={`ml-1 transition-transform ${dropdown.products ? "rotate-180" : ""}`} />
-            </button>
-            {dropdown.products && (
-              <div className="absolute bg-white text-[#075056] w-[200px] mt-2 rounded-md shadow-lg">
-                <button onClick={() => handleProductClick("Dog Food")} className="block px-4 py-2 hover:bg-gray-100">Dog Food</button>
-                <button onClick={() => handleProductClick("Cat Food")} className="block px-4 py-2 hover:bg-gray-100">Cat Food</button>
-              </div>
-            )}
-          </div>
-          <Link to="/store" className="hover:underline">Find a store</Link>
-          <div className="relative">
-            <button
-              className="flex items-center hover:underline"
-              onClick={() => toggleDropdown("news")}
-            >
-              News <FaAngleDown className={`ml-1 transition-transform ${dropdown.news ? "rotate-180" : ""}`} />
-            </button>
-            {dropdown.news && (
-              <div className="absolute bg-white text-[#075056] w-[200px] mt-2 rounded-md shadow-lg">
-                <Link to="/news-events" className="block px-4 py-2 hover:bg-gray-100">News & Events</Link>
-                <Link to="/tv" className="block px-4 py-2 hover:bg-gray-100">TV Commercials</Link>
-              </div>
-            )}
-          </div>
-          <Link to="/blogs" className="hover:underline">Blogs</Link>
-          <div className="relative">
-            <button
-              className="flex items-center hover:underline"
-              onClick={() => toggleDropdown("contact")}
-            >
-              Contact Us <FaAngleDown className={`ml-1 transition-transform ${dropdown.contact ? "rotate-180" : ""}`} />
-            </button>
-            {dropdown.contact && (
-              <div className="absolute bg-white text-[#075056] w-[200px] mt-2 rounded-md shadow-lg">
-                <Link to="/contact" className="block px-4 py-2 hover:bg-gray-100">Contact Us</Link>
-                <Link to="/join-us" className="block px-4 py-2 hover:bg-gray-100">Join Us</Link>
-                <Link to="/international-network" className="block px-4 py-2 hover:bg-gray-100">International Network</Link>
-              </div>
-            )}
+      {/* Top Navigation Bar */}
+      <div className="bg-[#19325b] text-white py-2 hidden lg:block">
+        <div className="container mx-auto px-4 flex justify-between items-center text-sm">
+          <div className="flex space-x-4">
+            <Link to="/customer-service" className="hover:underline">Customer Service</Link>
+            <Link to="/terms" className="hover:underline">Terms and Conditions</Link>
+            <Link to="/contact" className="hover:underline">Contact Us</Link>
+            <Link to="/overseas-branches" className="hover:underline">Overseas Branches</Link>
           </div>
         </div>
-
-        {/* Icons and Mobile Menu Button */}
-        <div className="flex items-center gap-4">
-          <button className="bg-white text-[#19325b] px-4 py-2 rounded-md border-2 flex items-center hover:bg-[#19325b] hover:text-white ">
-            <MdShoppingCart className="mr-1" /> Shop Online
-          </button>
-          <div className="hidden lg:block text-[#19325b] text-xl">
-            <IoMdSearch />
-          </div>
-          <button onClick={toggleMobileMenu} className="text-3xl md:hidden">
-            {menuOpen ? <IoMdClose /> : <FiMenu />}
-          </button>
-        </div>
-
-        {/* Mobile Menu */}
-        {menuOpen && (
-          <div className="fixed inset-0 bg-[#19325b] text-white z-50 flex flex-col items-center pt-16 space-y-6">
-            <button onClick={toggleMobileMenu} className="absolute top-4 right-4 text-3xl">
-              <IoMdClose />
-            </button>
-            <Link to="/" onClick={() => setMenuOpen(false)}>
-              <img src={logo} alt="PCG Logo" className="bg-white h-14 mb-4" />
-            </Link>
-            <Link to="/about" className="text-lg" onClick={() => setMenuOpen(false)}>About Us</Link>
-            <button onClick={() => toggleDropdown("products")} className="text-lg flex items-center">
-              <Link to="/products">
-                Products
-              </Link>
-              <FaAngleDown className={`ml-2 transition-transform ${dropdown.products ? "rotate-180" : ""}`} />
-            </button>
-            {dropdown.products && (
-              <div className="bg-[#19325b] text-white w-full text-center flex flex-col items-center">
-                <button onClick={() => handleProductClick("Dog Food")} className="block w-full px-4 py-2 text-center">
-                  Dog Food
-                </button>
-                <button onClick={() => handleProductClick("Cat Food")} className="block w-full px-4 py-2 text-center">
-                  Cat Food
-                </button>
-              </div>
-            )}
-            <Link to="/store" className="text-lg" onClick={() => setMenuOpen(false)}>Find a store</Link>
-            <button onClick={() => toggleDropdown("news")} className="text-lg flex items-center">
-              News <FaAngleDown className={`ml-2 transition-transform ${dropdown.news ? "rotate-180" : ""}`} />
-            </button>
-            {dropdown.news && (
-              <div className="bg-[#19325b] text-white w-full text-center">
-                <Link to="/news-events" className="block px-4 py-2">News & Events</Link>
-                <Link to="/tv" className="block px-4 py-2">TV Commercials</Link>
-              </div>
-            )}
-            <Link to="/blogs" className="text-lg" onClick={() => setMenuOpen(false)}>Blogs</Link>
-            <button onClick={() => toggleDropdown("contact")} className="text-lg flex items-center">
-              Contact Us <FaAngleDown className={`ml-2 transition-transform ${dropdown.contact ? "rotate-180" : ""}`} />
-            </button>
-            {dropdown.contact && (
-              <div className="bg-[#19325b] text-white w-full text-center">
-                <Link to="/contact" className="block px-4 py-2">Contact Us</Link>
-                <Link to="/join-us" className="block px-4 py-2">Join Us</Link>
-                <Link to="/international-network" className="block px-4 py-2">International Network</Link>
-              </div>
-            )}
-          </div>
-        )}
       </div>
+
+      {/* Main Navbar */}
+      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+        {/* Logo Section and Hamburger Menu on Mobile */}
+        <div className="flex items-center justify-between w-full md:w-auto">
+          <Link to="/">
+            <img src={logo} alt="PCG Logo" className="h-14 w-auto" />
+          </Link>
+          {/* Mobile Hamburger Menu */}
+          <div className="md:hidden">
+            <button onClick={() => setMenuOpen(!menuOpen)} className="text-3xl">
+              {menuOpen ? <IoMdClose /> : <FiMenu />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Search Bar */}
+        {/* <div className="md:hidden mt-4 w-full">
+          <div className="flex items-center bg-gray-100 px-4 py-2 rounded-md w-full">
+            <input
+              type="text"
+              placeholder="Find products for your pet"
+              className="bg-gray-100 outline-none w-full text-gray-600 placeholder-gray-400"
+            />
+            <button className="text-[#19325b]">
+              <IoMdSearch />
+            </button>
+          </div>
+        </div> */}
+
+        {/* Desktop Search Bar */}
+        <div className="hidden md:flex items-center bg-gray-100 px-4 py-2 rounded-md w-full md:w-1/2 lg:w-1/3">
+          <input
+            type="text"
+            placeholder="Find products for your pet"
+            className="bg-gray-100 outline-none w-full text-gray-600 placeholder-gray-400"
+          />
+          <button className="text-[#19325b]">
+            <IoMdSearch />
+          </button>
+        </div>
+
+        {/* Right Section - Warranty and Fast Delivery */}
+        <div className="hidden md:flex items-center space-x-6">
+          <div className="flex items-center">
+            <img src="/assets/warranty-icon.png" alt="Warranty" className="h-6 w-6 mr-2" />
+            <div>
+              <p className="text-[#19325b] font-semibold">Warranty</p>
+              <p className="text-sm text-gray-600">100% authentic products</p>
+            </div>
+          </div>
+          <div className="flex items-center">
+            <img src="/assets/delivery-icon.png" alt="Fast Delivery" className="h-6 w-6 mr-2" />
+            <div>
+              <p className="text-[#19325b] font-semibold">Fast Delivery</p>
+              <p className="text-sm text-gray-600">Track status instantly</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop Menu */}
+      <div className="hidden md:flex justify-center space-x-6 py-2 bg-gray-50">
+        <Link to="/products" className="hover:underline">Product Categories</Link>
+        <Link to="/product-brand" className="hover:underline">Product Brand</Link>
+        <Link to="/donation" className="hover:underline">Products for donation</Link>
+        <Link to="/promotion" className="hover:underline">Promotion</Link>
+      </div>
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="fixed inset-0 bg-[#19325b] text-white z-50 flex flex-col items-center pt-12 space-y-6">
+          <button onClick={() => setMenuOpen(false)} className="absolute top-4 right-4 text-3xl">
+            <IoMdClose />
+          </button>
+          <Link to="/" onClick={() => setMenuOpen(false)}>
+            <img src={logo} alt="PCG Logo" className="bg-white h-14 mb-4" />
+          </Link>
+          <Link to="/about" className="text-lg" onClick={() => setMenuOpen(false)}>About Us</Link>
+          <Link to="/products" className="text-lg" onClick={() => setMenuOpen(false)}>Product Categories</Link>
+          <Link to="/product-brand" className="text-lg" onClick={() => setMenuOpen(false)}>Product Brand</Link>
+          <Link to="/donation" className="text-lg" onClick={() => setMenuOpen(false)}>Products for donation</Link>
+          <Link to="/promotion" className="text-lg" onClick={() => setMenuOpen(false)}>Promotion</Link>
+          <Link to="/terms" className="text-lg" onClick={() => setMenuOpen(false)}>Terms and Conditions</Link>
+          <Link to="/contact" className="text-lg" onClick={() => setMenuOpen(false)}>Contact Us</Link>
+          <Link to="/overseas-branches" className="text-lg" onClick={() => setMenuOpen(false)}>Overseas Branches</Link>
+        </div>
+      )}
     </nav>
   );
 };

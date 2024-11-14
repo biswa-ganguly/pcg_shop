@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ProductCard from './ProductCard';
 import Navbar from '../../components/Navbar';
@@ -11,6 +11,7 @@ import 'slick-carousel/slick/slick-theme.css';
 
 const ProductDetails = () => {
   const { id } = useParams();
+  const [quantity, setQuantity] = useState(1); // Quantity state
 
   const products = productsData.product;
 
@@ -39,61 +40,94 @@ const ProductDetails = () => {
     ],
   };
 
-  
   const productImages = Object.keys(product)
     .filter(key => key.startsWith("Image"))
     .map(key => product[key])
-    .filter(Boolean); 
+    .filter(Boolean);
 
- 
   const productImageSliderSettings = {
     dots: true,
-    infinite: productImages.length > 1, 
+    infinite: productImages.length > 1,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
   };
 
+  // Handle quantity increase and decrease
+  const handleQuantityChange = (amount) => {
+    setQuantity((prevQuantity) => Math.max(1, prevQuantity + amount));
+  };
+
   return (
     <main>
-      <Navbar />
-      <div className="p-8">
-        <h1 className="text-3xl font-bold">{product["Product Tittle for ecom"]}</h1>
+     
+      <div className="p-8 lg:flex lg:justify-between lg:items-start">
         
-        
-        <div className="w-[50%] lg:w-[25%] mx-auto mt-4">
+        {/* Left Section: Product Image */}
+        <div className="lg:w-1/2">
           <Slider {...productImageSliderSettings}>
             {productImages.map((image, index) => (
               <img 
                 key={index} 
                 src={image} 
                 alt={`${product["Product Tittle for ecom"]} - Image ${index + 1}`} 
-                className="w-full h-96 object-cover rounded" 
+                className="w-[40%] lg:h-[40vw]  rounded shadow-lg" 
               />
             ))}
           </Slider>
         </div>
-        
-        <p className="mt-4">Description: {product["Product Description"]}</p>
 
-        <div className="mt-8">
-          <h2 className="text-2xl font-semibold mb-4">Related Products</h2>
-          <div className="hidden md:block">
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-              {relatedProducts.map((relatedProduct) => (
-                <ProductCard key={relatedProduct["SKU Code"]} product={relatedProduct} />
-              ))}
+  
+        <div className="lg:w-1/2 lg:ml-8 mt-6 lg:mt-8">
+          <h1 className="text-3xl font-bold text-gray-800 mb-4">{product["Product Tittle for ecom"]}</h1>
+          
+          
+          <div className="flex items-center text-2xl mb-8">
+            <span className="text-gray-800 font-semibold mr-4">${product["Price"]}</span>
+            {product["Discounted Price"] && (
+              <span className="text-red-600 line-through">${product["Discounted Price"]}</span>
+            )}
+          </div>
+
+    
+          <div className="flex items-center mb-4">
+            <label className="text-gray-700 mr-4">Quantity:</label>
+            <div className="flex items-center border rounded w-24">
+              <button onClick={() => handleQuantityChange(-1)} className="p-2 text-lg font-semibold">−</button>
+              <input type="number" min="1" value={quantity} readOnly className="w-12 text-center"/>
+              <button onClick={() => handleQuantityChange(1)} className="p-2 text-lg font-semibold">+</button>
             </div>
           </div>
-          <div className="md:hidden">
-            <Slider {...sliderSettings}>
-              {relatedProducts.map((relatedProduct) => (
-                <ProductCard key={relatedProduct["SKU Code"]} product={relatedProduct} />
-              ))}
-            </Slider>
-          </div>
+
+          {product["Product Description"] && (
+  <div className="mt-8">
+    <h2 className="text-xl font-semibold mb-2">Product Description</h2>
+    <p className="text-gray-600">{product["Product Description"]}</p>
+  </div>
+)}
+
         </div>
       </div>
+
+    
+      <div className="p-8 mt-12">
+        <h2 className="text-2xl font-semibold mb-4">Related Products</h2>
+        <div className="hidden md:block">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+            {relatedProducts.map((relatedProduct) => (
+              <ProductCard key={relatedProduct["SKU Code"]} product={relatedProduct} />
+            ))}
+          </div>
+        </div>
+        <div className="md:hidden">
+          <Slider {...sliderSettings}>
+            {relatedProducts.map((relatedProduct) => (
+              <ProductCard key={relatedProduct["SKU Code"]} product={relatedProduct} />
+            ))}
+          </Slider>
+        </div>
+      </div>
+
       <Footer />
       <SocialMediaSlider />
     </main>

@@ -9,7 +9,7 @@ import productsData from '../../constants/products.json';
 function Product() {
   return (
     <main>
-      <Navbar />
+      
       <ProductHero />
       <div>
         <ProductList products={productsData} />
