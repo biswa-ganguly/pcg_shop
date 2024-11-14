@@ -35,7 +35,7 @@ const Navbar = () => {
       <div className="bg-[#19325b] text-white py-2 hidden lg:block">
         <div className="container mx-auto px-4 flex justify-between items-center text-sm">
           <div className="flex space-x-4">
-            <Link to="/customer-service" className="hover:underline">Customer Service</Link>
+            <Link to="/aboutus" className="hover:underline">About Us</Link>
             <Link to="/terms" className="hover:underline">Terms and Conditions</Link>
             <Link to="/contact" className="hover:underline">Contact Us</Link>
             <Link to="/overseas-branches" className="hover:underline">Overseas Branches</Link>

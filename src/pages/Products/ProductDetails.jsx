@@ -11,8 +11,8 @@ import 'slick-carousel/slick/slick-theme.css';
 
 const ProductDetails = () => {
   const { id } = useParams();
-  const navigate = useNavigate(); // Add the useNavigate hook for redirection
-  const [quantity, setQuantity] = useState(1); // Quantity state
+  const navigate = useNavigate(); 
+  const [quantity, setQuantity] = useState(1); 
 
   const products = productsData.product;
 
@@ -54,14 +54,14 @@ const ProductDetails = () => {
     slidesToScroll: 1,
   };
 
-  // Handle quantity increase and decrease
+ 
   const handleQuantityChange = (amount) => {
     setQuantity((prevQuantity) => Math.max(1, prevQuantity + amount));
   };
 
-  // Handle View More button click
+
   const handleViewMore = () => {
-    navigate('/products'); // Navigate to the products page
+    navigate('/products'); 
   };
 
   return (
@@ -69,7 +69,7 @@ const ProductDetails = () => {
      
       <div className="p-8 lg:flex lg:justify-between lg:items-start">
         
-        {/* Left Section: Product Image */}
+       
         <div className="lg:w-1/2">
           <Slider {...productImageSliderSettings}>
             {productImages.map((image, index) => (
@@ -144,7 +144,7 @@ const ProductDetails = () => {
       </div>
 
       <Footer />
-      <SocialMediaSlider />
+     
     </main>
   );
 };

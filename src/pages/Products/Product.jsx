@@ -15,7 +15,7 @@ function Product() {
         <ProductList products={productsData} />
       </div>
       <Footer />
-      {/* <SocialMediaSlider /> */}
+      
     </main>
   );
 }
