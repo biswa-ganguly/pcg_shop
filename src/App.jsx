@@ -2,7 +2,7 @@ import React, { useLayoutEffect } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import Product from './pages/Products/Product'
 import ProductDetails from './pages/Products/ProductDetails'
-import Navbar from './components/Navbar' // assuming Navbar uses useNavigate
+import Navbar from './components/Navbar' 
 import Homepage from './pages/Home/Homepage'
 
 export default function App() {
