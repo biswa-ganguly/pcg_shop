@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import ProductCard from './ProductCard';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
@@ -11,6 +11,7 @@ import 'slick-carousel/slick/slick-theme.css';
 
 const ProductDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate(); // Add the useNavigate hook for redirection
   const [quantity, setQuantity] = useState(1); // Quantity state
 
   const products = productsData.product;
@@ -56,6 +57,11 @@ const ProductDetails = () => {
   // Handle quantity increase and decrease
   const handleQuantityChange = (amount) => {
     setQuantity((prevQuantity) => Math.max(1, prevQuantity + amount));
+  };
+
+  // Handle View More button click
+  const handleViewMore = () => {
+    navigate('/products'); // Navigate to the products page
   };
 
   return (
@@ -125,6 +131,15 @@ const ProductDetails = () => {
               <ProductCard key={relatedProduct["SKU Code"]} product={relatedProduct} />
             ))}
           </Slider>
+        </div>
+
+        {/* View More Button */}
+        <div className="mt-6 text-center">
+          <button 
+            onClick={handleViewMore} 
+            className="px-6 py-2 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700 transition duration-300">
+            View More
+          </button>
         </div>
       </div>
 
